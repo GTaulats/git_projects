@@ -382,14 +382,14 @@ const TaskModal: React.FC = () => {
                         justify="center"
                         align="center"
                       >
-                        <Flex>Genere</Flex>
+                        <Text>Genere</Text>
                         {newTask?.amount && (
                           <Flex
                             p="0 5px"
                             color={
                               Number(sumSP) < Number(newTask.amount.value)
                                 ? "yellow.500"
-                                : sumSP == newTask.amount.value
+                                : sumSP == newTask.amount.value && sumSP != 0
                                 ? "green.300"
                                 : "red"
                             }
@@ -401,10 +401,11 @@ const TaskModal: React.FC = () => {
                           >
                             <>
                               {/* Total acumulated in targetStored (by checking assigned with same taskId) */}
-                              {sumSP} /{" "}
-                              {newTask.amount.value === undefined
+                              {[undefined, 0, "", false].includes(
+                                newTask.amount.value
+                              )
                                 ? "..."
-                                : newTask.amount.value}{" "}
+                                : sumSP + "/ " + newTask.amount.value}{" "}
                               {newTask.amount.units}
                             </>
                           </Flex>
