@@ -9,6 +9,7 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { TasksPreset } from "@/src/components/Types/Task";
 import { Product } from "@/src/components/Types/Product";
 import { productModalState } from "@/src/atoms/objectAtoms/productModalAtom";
+import { allProductsAtom } from "@/src/atoms/dataAtom";
 
 type ProductInputsProps = {
   initialState: Product | undefined;
@@ -18,6 +19,8 @@ const ProductInputs: React.FC<ProductInputsProps> = ({ initialState }) => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [productState, setProductState] = useRecoilState(productModalState);
+
+  const setAllProducts = useSetRecoilState(allProductsAtom);
 
   const [newProduct, setNewProduct] = useState<Product>();
 
@@ -50,38 +53,47 @@ const ProductInputs: React.FC<ProductInputsProps> = ({ initialState }) => {
     }
 
     // Set final parameters if new, or update createdAt
-    setNewProduct(
-      (prev) =>
-        ({
-          ...prev,
-          createdAt: serverTimestamp(),
-        } as Product)
-    );
+    const NEWProduct = {
+      ...newProduct,
+      createdAt: serverTimestamp(),
+    } as Product;
+
+    setNewProduct(NEWProduct);
 
     setLoading(true);
 
     try {
-      const productDocRef = doc(firestore, "products", newProduct.productId);
+      const productDocRef = doc(firestore, "products", NEWProduct.productId);
       await runTransaction(firestore, async (transaction) => {
         // Create product
-        transaction.set(productDocRef, newProduct);
+        transaction.set(productDocRef, NEWProduct);
 
         setProductState((prev) => ({
           ...prev,
           open: false,
-          context: newProduct,
+          context: NEWProduct,
           action: productState.action,
         }));
       });
       if (initialState) {
-        console.log(`"${newProduct.name}" client successfuly modified`);
+        console.log(`"${NEWProduct.name}" client successfuly modified`);
       } else {
-        console.log(`"${newProduct.name}" client successfuly created`);
+        console.log(`"${NEWProduct.name}" client successfuly created`);
       }
     } catch (error: any) {
       console.log("handleCreate error", error);
       setError(error.message);
     }
+
+    setAllProducts((prev) => ({
+      ...prev,
+      allProducts: [
+        ...prev.allProducts.filter(
+          (item) => item.productId !== NEWProduct.productId
+        ),
+        NEWProduct,
+      ] as Product[],
+    }));
 
     setLoading(false);
 
