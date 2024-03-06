@@ -1,0 +1,10 @@
+
+@font-face {
+  font-family: "NotoColorEmoji";
+  unicode-range: U+1F1E6-1F1FF;
+  src: local("NotoColorEmoji"), url(./NotoColorEmoji.ttf) format("ttf");
+}
+
+.flag {
+  font-family: "NotoColorEmoji", sans-serif;
+}

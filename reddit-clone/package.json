@@ -1,0 +1,36 @@
+{
+  "name": "reddit-clone",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@chakra-ui/icons": "^2.1.1",
+    "@chakra-ui/next-js": "^2.2.0",
+    "@chakra-ui/react": "^2.8.2",
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "@fontsource/open-sans": "^5.0.22",
+    "@mui/icons-material": "^5.15.6",
+    "@mui/material": "^5.15.6",
+    "firebase": "^10.7.2",
+    "framer-motion": "^11.0.3",
+    "moment": "^2.30.1",
+    "next": "14.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18",
+    "react-firebase-hooks": "^5.1.1",
+    "react-icons": "^5.0.1",
+    "recoil": "^0.7.7"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "typescript": "^5"
+  }
+}
