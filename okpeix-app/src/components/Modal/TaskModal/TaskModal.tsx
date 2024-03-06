@@ -252,6 +252,25 @@ const TaskModal: React.FC = () => {
     }
   }, [purchaseState.open]);
 
+  // Handle returning value of Product creation
+  useEffect(() => {
+    if (!productState.open && productState.context !== undefined) {
+      setNewTask(
+        (prev) =>
+          ({
+            ...prev,
+            productId: productState.context?.productId,
+          } as Task)
+      );
+      // Cleanup
+      setProductState((prev) => ({
+        ...prev,
+        context: undefined,
+        action: undefined,
+      }));
+    }
+  }, [productState.open]);
+
   const modifyStored = (
     newArray: StoredProduct[],
     unassign: StoredProduct | undefined

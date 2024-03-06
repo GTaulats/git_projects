@@ -7,23 +7,26 @@
     Same thing with Client assignation to Orders and storedProducts.
 */
 
+import { Timestamp } from "firebase/firestore";
 import { Amount } from "./Task";
 
 export type Price = {
   value: number;
   coin: string;
   units: string;
-}
+};
 
-export type MeanPrice = { // Crucial for statistics
+export type MeanPrice = {
+  // Crucial for statistics
   price: Price;
   mean: number;
-}
+};
 
-export type StorageInfo = { // Basic info on how to preserve things
-  method: string;     // Fridge, freezer, void
+export type StorageInfo = {
+  // Basic info on how to preserve things
+  method: string; // Fridge, freezer, void
   expiration: number; // Days
-}
+};
 
 export type Product = {
   productId: string;
@@ -33,9 +36,10 @@ export type Product = {
   type: string; // Fish, seafood, etc.
   size: Amount[]; // Different sizes
   details: string;
+  createdAt: Timestamp;
 
   storageInfo: StorageInfo[]; // Specifies expiration depending on how it's preserved
-}
+};
 
 export type ProductTransaction = {
   partnerId: string;
@@ -43,4 +47,4 @@ export type ProductTransaction = {
   totalAmount: Amount;
   lastPrices: Price[];
   meanPrice: MeanPrice;
-}
+};
