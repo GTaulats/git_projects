@@ -48,7 +48,8 @@ const ClientInputs: React.FC<ClientInputsProps> = ({ initialState }) => {
   const [directionModal, setDirectionModal] = useState(false);
   const setClientModal = useSetRecoilState(clientModalState);
 
-  const allClients = useRecoilValue(allClientsAtom);
+  const allClients = useRecoilValue(allClientsAtom).allClients;
+  const setAllClients = useSetRecoilState(allClientsAtom);
 
   const [newClient, setNewClient] = useState(
     initialState
@@ -129,6 +130,16 @@ const ClientInputs: React.FC<ClientInputsProps> = ({ initialState }) => {
       console.log("handleCreate error", error);
       setError(error.message);
     }
+
+    setAllClients((prev) => ({
+      ...prev,
+      allClients: [
+        ...prev.allClients.filter(
+          (item) => item.clientId !== newClient.clientId
+        ),
+        newClient,
+      ] as Client[],
+    }));
 
     setLoading(false);
 
