@@ -110,6 +110,7 @@ const ProductSelector: React.FC<ProductSelectorProps> = ({
                   <Flex key={item[1].productId} direction="column">
                     <Flex
                       p={2.5}
+                      fontWeight={600}
                       cursor="pointer"
                       _hover={{ bg: "gray.100" }}
                       onClick={() => {
@@ -117,7 +118,7 @@ const ProductSelector: React.FC<ProductSelectorProps> = ({
                         onProductClick(item[1]);
                       }}
                     >
-                      {String(item[0])}
+                      {String(item[0]).replaceAll(",", ` - `)}
                     </Flex>
                     <Divider borderColor="gray.300" />
                   </Flex>

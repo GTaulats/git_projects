@@ -145,7 +145,7 @@ const ProductInputs: React.FC<ProductInputsProps> = ({ initialState }) => {
             name="alias"
             type="text"
             width="75%"
-            placeholder="Ex: Musclo Mejillón Mussel Mytilidae"
+            placeholder="Ex: Musclo, Mejillón, Mussel, Mytilidae"
             onChange={onChange}
             value={newProduct?.alias}
           />

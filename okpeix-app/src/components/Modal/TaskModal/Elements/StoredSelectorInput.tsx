@@ -69,7 +69,6 @@ const StoredSelectorInput: React.FC<StoredSelectorInputProps> = ({
       <PopoverAnchor>
         <Input
           autoComplete="off"
-          autoFocus
           type="text"
           name="name"
           ref={focusRef}
