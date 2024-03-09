@@ -19,10 +19,10 @@ const Home: NextPage = () => {
     <>
       <Topbar />
       <Flex
-        direction="row"
+        direction={{ base: "column", lg: "row" }}
         bg="gray.300"
         minHeight="100vh"
-        pt="65px"
+        pt={{ base: "40px", lg: "65px" }}
         pb="20px"
         border="1px solid red"
       >
@@ -31,7 +31,7 @@ const Home: NextPage = () => {
           <Flex
             bg="white"
             direction="column"
-            flex={1}
+            // flex={1}
             width="95%"
             maxWidth="860px"
             height="100%"

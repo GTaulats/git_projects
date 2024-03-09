@@ -91,6 +91,24 @@ const Topbar: React.FC<TopbarProps> = () => {
                       Estació de treball
                     </Flex>
                   </Link>
+                  <Link href={"/"}>
+                    <Flex
+                      align="center"
+                      p="15px 20px"
+                      _hover={{ bg: "gray.200" }}
+                      onClick={() => {
+                        setOpenDrawer(false);
+                      }}
+                    >
+                      <Icon
+                        as={FiUsers}
+                        mr={4}
+                        fontSize="16pt"
+                        fontWeight={800}
+                      />
+                      Estació del client
+                    </Flex>
+                  </Link>
                   <Link href={"/database"}>
                     <Flex
                       p="15px 20px"

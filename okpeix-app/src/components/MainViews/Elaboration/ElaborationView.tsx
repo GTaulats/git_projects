@@ -107,33 +107,7 @@ const ElaborationView: React.FC<ElaborationViewProps> = () => {
 
   return (
     <>
-      <Flex
-        position="fixed"
-        right="50px"
-        bottom="50px"
-        p="14px"
-        borderRadius="20px"
-        bg="white"
-        align="center"
-        shadow="2px 2px 10px gray"
-        cursor="pointer"
-        // onClick={() => {
-        //   setOrderState((prev) => ({
-        //     ...prev,
-        //     open: true,
-        //     context: undefined,
-        //     action: "create",
-        //   }));
-        // }}
-      >
-        <Text fontSize="20pt" fontWeight={700} mr={2}>
-          +
-        </Text>
-        <Text fontSize="15pt" fontWeight={700}>
-          Nova comanda
-        </Text>
-      </Flex>
-      <Flex>
+      <Flex flexWrap="wrap">
         {loadingOrders ? (
           <Spinner />
         ) : (

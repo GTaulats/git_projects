@@ -48,7 +48,11 @@ const OrderInvoiceElement: React.FC<OrderInvoiceElementProps> = ({
 
   return (
     <>
-      <Flex width="33.33%" p={2} onClick={onClick}>
+      <Flex
+        width={{ base: "100%", sm: "50%", md: "33.333%", xl: "25%" }}
+        p={2}
+        onClick={onClick}
+      >
         <Flex
           width="100%"
           height="min-content"

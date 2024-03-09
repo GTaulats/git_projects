@@ -87,7 +87,11 @@ const SortedPurchases: React.FC<SortedPurchasesProps> = ({
         {Object.keys(sortedPurchases).map((key, index) => {
           if (key !== "none") {
             return (
-              <Flex key={key} width="33.33%" p={2}>
+              <Flex
+                key={key}
+                width={{ base: "100%", sm: "50%", md: "33.333%" }}
+                p={2}
+              >
                 <Flex
                   flex={1}
                   p={2}

@@ -308,15 +308,16 @@ const OrderModal: React.FC = () => {
       : undefined;
 
     setAllStored((prev) => ({ ...prev, storedProducts: newAllStored }));
-    setAllClients((prev) => ({
-      ...prev,
-      allClients: [
-        ...prev.allClients.filter(
-          (item) => item.clientId !== NEWOrder.clientId
-        ),
-        NEWClient,
-      ] as Client[],
-    }));
+    NEWClient !== undefined &&
+      setAllClients((prev) => ({
+        ...prev,
+        allClients: [
+          ...prev.allClients.filter((item) => {
+            return item.clientId !== NEWOrder.clientId;
+          }),
+          NEWClient,
+        ] as Client[],
+      }));
 
     console.log("NEWClient", NEWClient);
 
@@ -466,7 +467,7 @@ const OrderModal: React.FC = () => {
     }
   }, [selectedPreset]);
 
-  // TODO: Create presets from order
+  console.log("allClients", allClients);
 
   return (
     <>

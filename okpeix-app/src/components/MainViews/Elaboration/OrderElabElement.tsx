@@ -93,7 +93,12 @@ const OrderElabElement: React.FC<OrderElabElementProps> = ({ order }) => {
 
   return (
     <>
-      <Flex width="33.33%" p={2} onClick={() => setOrderShow(!orderShow)}>
+      <Flex
+        // minWidth="250px"
+        width={{ base: "100%", sm: "50%", md: "33.333%", xl: "25%" }}
+        p={2}
+        onClick={() => setOrderShow(!orderShow)}
+      >
         <Flex
           width="100%"
           height="min-content"

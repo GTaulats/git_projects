@@ -40,10 +40,13 @@ const SectionCard: React.FC<SectionCardProps> = ({ stage }) => {
   return (
     <>
       <Flex
+        p="16px"
         bg="white"
         display="column"
-        p="16px"
         borderRadius={20}
+        minWidth="200px"
+        maxWidth="200px"
+        maxHeight="150px"
         position="relative"
         cursor="pointer"
         _hover={{ bg: "gray.50" }}

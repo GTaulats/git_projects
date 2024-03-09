@@ -142,7 +142,7 @@ const InvoiceView: React.FC<InvoiceViewProps> = () => {
           Nova comanda
         </Text>
       </Flex>
-      <Flex>
+      <Flex border="1px solid red" flexWrap="wrap">
         {loadingOrders ? (
           <Spinner />
         ) : (

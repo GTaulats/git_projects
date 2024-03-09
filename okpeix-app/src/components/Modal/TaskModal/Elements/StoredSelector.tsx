@@ -20,6 +20,7 @@ import { RxCross2 } from "react-icons/rx";
 import StoredSelectorElement from "./StoredSelectorElement";
 import { Task } from "@/src/components/Types/Task";
 import StoredSelectorInput from "./StoredSelectorInput";
+import StoredSelection from "./StoredSelection";
 
 type SelectorSelectorProps = {
   targetProduct: Product | undefined;
@@ -102,8 +103,7 @@ const SelectorSelector: React.FC<SelectorSelectorProps> = ({
                 >
                   <Icon as={RxCross2} />
                 </Flex>
-                <StoredSelectorElement
-                  mode="tag"
+                <StoredSelection
                   task={task}
                   item={stored}
                   targetProduct={targetProduct}
