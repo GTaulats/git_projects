@@ -215,6 +215,11 @@ const ClientInputs: React.FC<ClientInputsProps> = ({ initialState }) => {
             </Select>
           </Flex>
         </Flex>
+        {newClient.firebaseUserId && (
+          <Text m="5px 0" color="green.300">
+            Aquest client pot accedir a OkPeix-app
+          </Text>
+        )}
         <Divider />
         <Flex align="center">
           <Text ml="auto" mr={3} textAlign="right">

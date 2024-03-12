@@ -48,17 +48,22 @@ const ClientOptions: React.FC<ClientOptionsProps> = ({
     useCreateUserWithEmailAndPassword(auth);
 
   // adds entry at firestore /users since can't access directly authent.
-  const createUserDocument = async (user: User) => {
+  const createUserDocument = async (user: any) => {
     const userDocRef = doc(firestore, "users", user.uid);
     await setDoc(userDocRef, JSON.parse(JSON.stringify(user)));
     // Save user.uid in Client's firebaseUserId
   };
+
+  // Execute when userCred is assigned. Updates client entry
   useEffect(() => {
     console.log("wth", userCred);
     if (userCred) {
       console.log("yooo");
-      // Creates user in Firebase Authentification
-      createUserDocument(userCred.user);
+      // Creates user in Firebase Authentification. Appends corresponding ID
+      createUserDocument({
+        ...userCred.user,
+        clientId: contextClient.clientId,
+      });
 
       // Assigns the Authentification uid to the client
       const func = async () => {
@@ -69,14 +74,35 @@ const ClientOptions: React.FC<ClientOptionsProps> = ({
           ...client,
           firebaseUserId: userCred?.user.uid,
         } as Client); // Dunno why it won't update by using setClient
+
+        setClientModal((prev) => ({
+          ...prev,
+          open: false,
+          context: { ...client, firebaseUserId: userCred?.user.uid } as Client,
+          action: "modify",
+        }));
       };
       func();
     }
   }, [userCred]);
 
-  // function api<T>(url: string)
+  useEffect(() => {
+    if (confirmChoice && confirmChoice[1]) {
+      if (confirmChoice[0] === "delete") delClient();
+      if (confirmChoice[0] === "login") loginClient();
+      // if (confirmChoice[0] === "revoke") revokeClient();
+    }
+  }, [confirmChoice]);
 
-  const loginClient = () => {
+  // TODO
+  // const revokeClient = () => {
+  //   // Deletes user linked to the client and updates the client
+  //   setConfirmChoice(undefined);
+  //   setOpenConfirm(undefined);
+  //   setError("");
+  // };
+
+  const loginClient = async () => {
     // Creates a firebase user by using the inputed email account.
     // A random password is generated, and an email is sent to the client for it to be used to login.
 
@@ -93,6 +119,7 @@ const ClientOptions: React.FC<ClientOptionsProps> = ({
       return;
     }
 
+    // TODO: Hide this newPassword in backend
     const newPassword = uniqueId().substring(3); // Default password for login
 
     setLoginLoading(true);
@@ -105,15 +132,6 @@ const ClientOptions: React.FC<ClientOptionsProps> = ({
     );
 
     try {
-      setClientModal((prev) => ({
-        ...prev,
-        open: false,
-        context: { ...client, firebaseUserId: userCred?.user.uid } as Client,
-        action: "modify",
-      }));
-
-      console.log(`User ${contextClient.name} linked successfuly`);
-
       // Send password to client via email
       // TODO: Insert link to okpeix-app
       // TODO: Make dedicated function for email sending
@@ -161,17 +179,20 @@ const ClientOptions: React.FC<ClientOptionsProps> = ({
         body: JSON.stringify(data),
       } as RequestInit;
 
-      // fetch("/api/email", req).then((res) => {
-      //   if (res.status === 200) {
-      //     console.log("Response succeeded!");
-      //   } else {
-      //     console.log("Response failed...");
-      //   }
-      // });
+      fetch("/api/email", req).then((res) => {
+        if (res.status === 200) {
+          console.log("Response succeeded!");
+        } else {
+          console.log("Response failed...");
+        }
+      });
+
+      console.log(`User ${contextClient.name} linked successfuly`);
     } catch (error: any) {
       setError(String(error));
       console.log("handleCreate error", error);
     }
+
     setLoginLoading(false);
   };
 
@@ -208,13 +229,6 @@ const ClientOptions: React.FC<ClientOptionsProps> = ({
     }
     setDupLoading(false);
   };
-
-  useEffect(() => {
-    if (confirmChoice && confirmChoice[1]) {
-      if (confirmChoice[0] === "delete") delClient();
-      if (confirmChoice[0] === "login") loginClient();
-    }
-  }, [confirmChoice]);
 
   const delClient = async () => {
     setConfirmChoice(undefined);
@@ -278,20 +292,36 @@ const ClientOptions: React.FC<ClientOptionsProps> = ({
           <PopoverArrow />
           <PopoverBody>
             <Stack>
-              <Button
-                onClick={() =>
-                  setOpenConfirm([
-                    "login",
-                    "Habilitaràs al client accedir a aquest aplicatiu web. Un correu se l'enviarà amb la contrasenya. Procedir?",
-                  ])
-                }
-                isLoading={loginLoading}
-              >
-                Habilita inici sessió
-              </Button>
               <Button onClick={duplicateClient} isLoading={dupLoading}>
                 Duplica client
               </Button>
+              {client.firebaseUserId ? (
+                // TODO
+                <Button
+                  color="red.400"
+                  onClick={() =>
+                    setOpenConfirm([
+                      "revoke",
+                      "Impediràs l'accés d'aquest client a l'aplicatiu. Procedir?",
+                    ])
+                  }
+                  isLoading={loginLoading}
+                >
+                  Deshabilita inici sessió
+                </Button>
+              ) : (
+                <Button
+                  onClick={() =>
+                    setOpenConfirm([
+                      "login",
+                      "Habilitaràs al client accedir a aquest aplicatiu web. Un correu se l'enviarà amb la contrasenya. Procedir?",
+                    ])
+                  }
+                  isLoading={loginLoading}
+                >
+                  Habilita inici sessió
+                </Button>
+              )}
               <Button
                 color="red.400"
                 onClick={() =>
