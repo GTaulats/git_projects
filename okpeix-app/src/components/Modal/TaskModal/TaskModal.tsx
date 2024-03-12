@@ -52,7 +52,7 @@ const TaskModal: React.FC = () => {
   const [taskState, setTaskState] = useRecoilState(taskModalState);
 
   const [newTask, setNewTask] = useState<Task>(taskState.context as Task);
-  console.log("newestTask", newTask);
+  // console.log("newestTask", newTask);
   const [newAllStored, setNewAllStored] = useState<StoredProduct[]>(
     taskState.newAllStored ? taskState.newAllStored : ([] as StoredProduct[])
   );
@@ -312,7 +312,7 @@ const TaskModal: React.FC = () => {
   }, 0);
 
   // console.log("newTask", newTask);
-  console.log("newAllStored", newAllStored);
+  // console.log("newAllStored", newAllStored);
 
   return (
     // BUG: Update list of Genere upon creation without refresh

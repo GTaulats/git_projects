@@ -7,7 +7,7 @@ import {
   ModalOverlay,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { useRecoilState } from "recoil";
 import { clientModalState } from "@/src/atoms/objectAtoms/clientModalAtom.ts";
@@ -16,6 +16,12 @@ import ClientOptions from "./Elements/ClientOptions.tsx";
 
 const ClientModal: React.FC = () => {
   const [clientState, setClientState] = useRecoilState(clientModalState);
+
+  const [error, setError] = useState<string>("");
+
+  useEffect(() => {
+    setError("");
+  }, []);
 
   const handleClose = () => {
     setClientState((prev) => ({
@@ -49,9 +55,15 @@ const ClientModal: React.FC = () => {
                 )}
               </Flex>
               {clientState.context !== undefined && (
-                <ClientOptions contextClient={clientState.context} />
+                <ClientOptions
+                  setError={setError}
+                  contextClient={clientState.context}
+                />
               )}
             </Flex>
+            <Text color="red.400" fontSize="12pt">
+              {error}
+            </Text>
           </ModalHeader>
           <ModalBody padding="5px 20px 15px 20px">
             <ClientInputs initialState={clientState.context} />

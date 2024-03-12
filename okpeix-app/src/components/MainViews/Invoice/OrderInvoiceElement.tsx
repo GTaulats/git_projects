@@ -65,7 +65,7 @@ const OrderInvoiceElement: React.FC<OrderInvoiceElementProps> = ({
           cursor="pointer"
           _hover={{ borderColor: "gray.100" }}
         >
-          <Flex p={2} justify="space-between" align="center">
+          <Flex p={2} justify="space-between" align="center" flexWrap="wrap">
             <Text fontWeight={600} fontSize="14pt">
               {targetClient?.name}
             </Text>

@@ -5,7 +5,7 @@ import ClientElement from "../components/Database/ClientElement";
 import { productModalState } from "../atoms/objectAtoms/productModalAtom";
 import { useRecoilState } from "recoil";
 // import ProductElement from "../components/Database/ProductElement";
-import { query, collection, getDocs } from "firebase/firestore";
+import { query, collection, getDocs, orderBy } from "firebase/firestore";
 import { firestore } from "../firebase/clientApp";
 import { Product } from "../components/Types/Product";
 import ProductElement from "../components/Database/ProductElement";
@@ -64,7 +64,10 @@ const ProductDB: React.FC<ProductDBProps> = () => {
   const getProducts = async () => {
     setLoading(true);
     try {
-      const queryRef = query(collection(firestore, "products"));
+      const queryRef = query(
+        collection(firestore, "products"),
+        orderBy("name", "asc")
+      );
       const productDocs = await getDocs(queryRef);
       const products = productDocs.docs.map((doc) => ({
         productId: doc.id,

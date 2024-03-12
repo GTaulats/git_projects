@@ -5,7 +5,7 @@ import ClientElement from "../components/Database/ClientElement";
 import { elaborationModalState } from "../atoms/objectAtoms/elaborationModalAtom";
 import { useRecoilState } from "recoil";
 // import ElaborationElement from "../components/Database/ElaborationElement";
-import { query, collection, getDocs } from "firebase/firestore";
+import { query, collection, getDocs, orderBy } from "firebase/firestore";
 import { firestore } from "../firebase/clientApp";
 import { Elaboration } from "../components/Types/Elaboration";
 import ElaborationElement from "../components/Database/ElaborationElement";
@@ -68,7 +68,10 @@ const ElaborationDB: React.FC<ElaborationDBProps> = () => {
   const getElaborations = async () => {
     setLoading(true);
     try {
-      const queryRef = query(collection(firestore, "elaborations"));
+      const queryRef = query(
+        collection(firestore, "elaborations"),
+        orderBy("name", "asc")
+      );
       const elaborationDocs = await getDocs(queryRef);
       const elaborations = elaborationDocs.docs.map((doc) => ({
         elaborationId: doc.id,

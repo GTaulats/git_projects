@@ -16,7 +16,12 @@ type ClientElementProps = {
 
 const ClientElement: React.FC<ClientElementProps> = ({ client, onClick }) => {
   return (
-    <Flex width="33.33%" height="33%" p={2} onClick={onClick}>
+    <Flex
+      width={{ base: "100%", sm: "50%", md: "33.333%" }}
+      height="33%"
+      p={2}
+      onClick={onClick}
+    >
       <Flex
         width="100%"
         height="min-content"

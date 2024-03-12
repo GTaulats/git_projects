@@ -14,7 +14,7 @@ import ElaborationDB from "@/src/DatabaseViews/ElaborationDB";
 type dbPageProps = {};
 
 const dbPage: React.FC<dbPageProps> = () => {
-  const [record, setRecord] = useState("elaborations");
+  const [record, setRecord] = useState("clients");
   const router = useRouter();
 
   const RecordMessage = {
@@ -96,10 +96,6 @@ const dbPage: React.FC<dbPageProps> = () => {
                 );
               })}
             </Select>
-          </Flex>
-          <Divider />
-          <Flex align="center" width="100%">
-            <Text>Ordre: </Text>
           </Flex>
           <Divider />
           <Flex width="100%" height="100%">

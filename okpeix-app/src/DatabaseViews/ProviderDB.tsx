@@ -4,7 +4,7 @@ import ProviderModal from "@/src/components/Modal/ProviderModal/ProviderModal";
 import { Provider } from "@/src/components/Types/AppUser";
 import { firestore } from "@/src/firebase/clientApp";
 import { Flex, Button, Spinner } from "@chakra-ui/react";
-import { collection, getDocs, query } from "firebase/firestore";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 
@@ -64,7 +64,10 @@ const ProviderDB: React.FC<ProviderDBProps> = () => {
   const getProviders = async () => {
     setLoading(true);
     try {
-      const queryRef = query(collection(firestore, "providers"));
+      const queryRef = query(
+        collection(firestore, "providers"),
+        orderBy("name", "asc")
+      );
       const providerDocs = await getDocs(queryRef);
       const providers = providerDocs.docs.map((doc) => ({
         providerId: doc.id,

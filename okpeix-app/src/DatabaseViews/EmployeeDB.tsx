@@ -4,7 +4,7 @@ import EmployeeModal from "@/src/components/Modal/EmployeeModal/EmployeeModal";
 import { Employee } from "@/src/components/Types/AppUser";
 import { firestore } from "@/src/firebase/clientApp";
 import { Flex, Button, Spinner } from "@chakra-ui/react";
-import { collection, getDocs, query } from "firebase/firestore";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import EmployeeElement from "../components/Modal/EmployeeModal/EmployeeElement";
@@ -65,7 +65,10 @@ const EmployeeDB: React.FC<EmployeeDBProps> = () => {
   const getEmployees = async () => {
     setLoading(true);
     try {
-      const queryRef = query(collection(firestore, "employees"));
+      const queryRef = query(
+        collection(firestore, "employees"),
+        orderBy("name", "asc")
+      );
       const employeeDocs = await getDocs(queryRef);
       const employees = employeeDocs.docs.map((doc) => ({
         employeeId: doc.id,
