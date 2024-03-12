@@ -14,6 +14,8 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import OAuthButtons from "../components/Modal/Auth/OAuthButtons";
 import AuthInputs from "../components/Modal/Auth/AuthInputs/AuthInputs";
 import ResetPassword from "../components/Modal/Auth/AuthInputs/ResetPassword";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
   // const [user, loadingUser] = useAuthState(auth)
@@ -21,38 +23,15 @@ const Home: NextPage = () => {
   // const [orders, setOrders] = useRecoilState(OrdersState);
 
   const [user] = useAuthState(auth);
+  const router = useRouter();
+
+  if (user) {
+    router.push(`/workspace`);
+  }
+
   return (
     <>
-      {user ? (
-        <>
-          <Topbar />
-          <Flex
-            direction={{ base: "column", lg: "row" }}
-            bg="gray.300"
-            minHeight="100vh"
-            pt={{ base: "40px", lg: "65px" }}
-            pb="20px"
-            border="1px solid red"
-          >
-            <NavView />
-            <Flex justify="center" flex={1}>
-              <Flex
-                bg="white"
-                direction="column"
-                // flex={1}
-                width="95%"
-                maxWidth="860px"
-                height="100%"
-              >
-                {stage === "invoice" && <InvoiceView />}
-                {stage === "toPurchase" && <ToPurchaseView />}
-                {stage === "elaboration" && <ElaborationView />}
-              </Flex>
-            </Flex>
-          </Flex>
-          {/* <Navbar /> */}
-        </>
-      ) : (
+      {!user && (
         <Flex align="center" justify="center" height="100vh">
           <Flex
             direction="column"
